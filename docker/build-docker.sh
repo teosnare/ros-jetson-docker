@@ -11,6 +11,6 @@ docker build \
     ${BUILD_DIR}/src
 
 if [[ $? != 0 ]]; then
-    echo "エラーにより中断しました．"
+    echo "Interrupted due to an error"
     exit 1
 fi

@@ -12,9 +12,9 @@ function usage_exit {
   cat <<_EOS_ 1>&2
   Usage: $PROG_NAME [OPTIONS...]
   OPTIONS:
-    -h, --help                      このヘルプを表示
-    -i, --id                        コンテナのIDを指定
-    -n, --name NAME                 コンテナの名前を指定
+    -h, --help                      Show this help
+    -i, --id                        Specify the container ID
+    -n, --name NAME                 Specify the name of the container
 _EOS_
     exit 1
 }
@@ -24,7 +24,7 @@ while (( $# > 0 )); do
         usage_exit
     elif [[ $1 == "--id" ]] || [[ $1 == "-i" ]]; then
         if [[ $2 == -* ]]; then
-            echo "無効なパラメータ"
+            echo "Invalid parameter"
             usage_exit
         else
             CONTAINER_ID=$2
@@ -32,13 +32,13 @@ while (( $# > 0 )); do
         shift 2
     elif [[ $1 == "--name" ]] || [[ $1 == "-n" ]]; then
         if [[ $2 == -* ]] || [[ $2 == *- ]]; then
-            echo "無効なパラメータ： $1 $2"
+            echo "Invalid parameter： $1 $2"
             usage_exit
         fi
         CONTAINER_NAME=$2
         shift 2
     else
-        echo "無効なパラメータ： $1"
+        echo "Invalid parameter： $1"
         usage_exit
     fi
 done
@@ -56,14 +56,14 @@ fi
 CONTAINER_NUMS=$(echo "${CONTAINER_ID}" | wc -l)
 
 if [[ ${CONTAINER_NUMS} -eq 0 ]]; then
-    echo "起動中のROS-Bridgeコンテナが存在しません．"
+    echo "The running ROS-Bridge container does not exist．"
     usage_exit
 elif [[ ${CONTAINER_NUMS} -ne 1 ]]; then
-    echo "起動しているROS-Bridgeコンテナが複数存在します．"
+    echo "There are multiple ROS-Bridge containers running．"
     echo ""
     docker ps
     echo ""
-    echo "オプションを付けてください．"
+    echo "Please add an option．"
     usage_exit
 fi
 

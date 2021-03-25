@@ -15,10 +15,10 @@ function usage_exit {
   cat <<_EOS_ 1>&2
   Usage: $PROG_NAME [OPTIONS...]
   OPTIONS:
-    -h, --help              このヘルプを表示
-    -n, --name NAME         コンテナの名前を指定（既定値：${CONTAINER_NAME}）
-    -e, --env ENV=VALUE     コンテナの環境変数を指定する（複数指定可）
-    -c, --command CMD       コンテナ起動時に実行するコマンドを指定
+    -h, --help              Show this help
+    -n, --name NAME         Specify the name of the container（Default value：${CONTAINER_NAME}）
+    -e, --env ENV=VALUE     Specify the environment variable of the container (multiple can be specified)
+    -c, --command CMD       Specify the command to be executed when the container starts
 _EOS_
     exit 1
 }
@@ -28,27 +28,27 @@ while (( $# > 0 )); do
         usage_exit
     elif [[ $1 == "--name" ]] || [[ $1 == "-n" ]]; then
         if [[ $2 == -* ]] || [[ $2 == *- ]]; then
-            echo "無効なパラメータ： $1 $2"
+            echo "Invalid parameter： $1 $2"
             usage_exit
         fi
         CONTAINER_NAME=$2
         shift 2
     elif [[ $1 == "--env" ]] || [[ $1 == "-e" ]]; then
         if [[ $2 == -* ]] || [[ $2 == *- ]]; then
-            echo "無効なパラメータ： $1 $2"
+            echo "Invalid parameter： $1 $2"
             usage_exit
         fi
         DOCKER_ENV="${DOCKER_ENV} -e $2"
         shift 2
     elif [[ $1 == "--command" ]] || [[ $1 == "-c" ]]; then
         if [[ $2 == -* ]] || [[ $2 == *- ]]; then
-            echo "無効なパラメータ"
+            echo "Invalid parameter"
             usage_exit
         fi
         CONTAINER_CMD=$2
         shift 2
     else
-        echo "無効なパラメータ： $1"
+        echo "Invalid parameter： $1"
         usage_exit
     fi
 done
